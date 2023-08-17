@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/api";
 import { FetchList } from "../components/FetchList";
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  CardImg,
+  Col,
+  Container,
+  Row,
+  Table,
+} from "react-bootstrap";
 import { Filter } from "../components/Filter";
 import Sidebar from "../components/sidebar";
+import { CategoryIcon } from "../components/CategoryIcon";
+import { useFormik } from "formik";
 
 export const MainTables = () => {
   const [expenseList, setExpenseList] = useState([]);
-  const [totalExpense, setTotalExpense] = useState(0);
+  const [totalExpense, setTotalExpense] = useState({});
   const [show, setShow] = useState("");
   const handleShowlist = () => {
     setShow("show");
@@ -26,15 +36,49 @@ export const MainTables = () => {
       .catch((err) => console.log(err));
   };
 
+  const formikSideBar = useFormik({
+    initialValues: {
+      name: "",
+      category: [],
+      datefrom: "",
+      dateto: "",
+      nominalfrom: "",
+      nominalto: "",
+      selectallcategory: false,
+    },
+    onSubmit: async (values) => {
+      let stringquery = "/expense";
+      if (
+        values.name ||
+        values.category.length ||
+        values.datefrom ||
+        values.dateto ||
+        values.nominalfrom ||
+        values.nominalto
+      )
+        stringquery += "?";
+      if (values.name) stringquery += `name=${values.name}&`;
+      if (values.datefrom) stringquery += `datefrom=${values.datefrom}&`;
+      if (values.dateto) stringquery += `dateto=${values.dateto}&`;
+    },
+  });
+
   useEffect(() => {
     fetch();
   }, []);
+  useEffect(() => {
+    const executeFilter = setTimeout(() => {
+      formikSideBar.handleSubmit();
+    }, 500);
+    return () => clearTimeout(executeFilter);
+  }, [formikSideBar.values]);
 
   return (
     <>
       <Row>
         <Col lg={2} className="border-right">
           <Sidebar
+            formikSideBar={formikSideBar}
             {...{ buttonname: "Filter", scroll: true, backdrop: true }}
           />
         </Col>
@@ -44,18 +88,41 @@ export const MainTables = () => {
               <Card style={{ width: "100%" }}>
                 <Card.Body>
                   <Card
-                    className="text-center mb-2 w-50"
+                    className="text-center mb-2 w-100"
                     style={{ margin: "0 auto" }}
                   >
                     <Card.Title>
                       <h1>Expense Dashboard</h1>
                     </Card.Title>
-                    <Card.Text>
-                      <h2>
-                        Subtotal or Total Expense: IDR
-                        {totalExpense.toLocaleString(`id-ID`)}
-                      </h2>
-                    </Card.Text>
+                    <Row className="d-flex flex-row justify-content-center w-100 m-0">
+                      <Card className="d-flex flex-row align-items-center justify-content-center w-50">
+                        <CardImg
+                          src="https://media.tenor.com/yQPfHp6AmGgAAAAC/money-with-wings-joypixels.gif"
+                          alt="flying cash icon gif"
+                          style={{ maxWidth: "200px", float: "left" }}
+                        />
+                        <Card.Text className="h-100 d-flex flex-column justify-content-center align-item-center">
+                          <h4>Total Expense:</h4>{" "}
+                          <h4>
+                            IDR
+                            {totalExpense.grandtotal &&
+                              totalExpense?.grandtotal.toLocaleString(`id-ID`)}
+                          </h4>
+                        </Card.Text>
+                      </Card>
+                    </Row>
+                    <Row className="d-flex flex-row justify-content-start w-100 m-0">
+                      {totalExpense?.grandtotal &&
+                        Object.keys(totalExpense).map((key) => {
+                          if (key !== "grandtotal")
+                            return (
+                              <CategoryIcon
+                                val={key}
+                                totalExpense={totalExpense}
+                              />
+                            );
+                        })}
+                    </Row>
                   </Card>
                   <Button
                     variant="primary"

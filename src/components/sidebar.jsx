@@ -3,21 +3,16 @@ import { Card, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { api } from "../api/api";
-import { useFormik } from "formik";
 import CategoryFilterForm from "./Category-filter-form";
 
-export default function Sidebar({ buttonname, ...props }) {
+export default function Sidebar({ formikSideBar, buttonname, ...props }) {
   const [show, setShow] = useState(false);
   const [category, setCategory] = useState([]);
-
-  const handleClose = () => setShow(false);
-  const toggleShow = () => setShow((s) => !s);
-
-  //   const formik = useFormik();
-
   async function fetchCategory() {
     await api.get(`/category`).then((res) => setCategory(res.data));
   }
+  const handleClose = () => setShow(false);
+  const toggleShow = () => setShow((s) => !s);
 
   useEffect(() => {
     fetchCategory();
@@ -45,6 +40,7 @@ export default function Sidebar({ buttonname, ...props }) {
                     type="text"
                     name="name"
                     placeholder="Expense name"
+                    onChange={formikSideBar.handleChange}
                     autoFocus
                   />
                 </Form.Group>
@@ -56,6 +52,7 @@ export default function Sidebar({ buttonname, ...props }) {
                     type="date"
                     name="datefrom"
                     placeholder="datefrom"
+                    onChange={formikSideBar.handleChange}
                     autoFocus
                   />
                 </Form.Group>
@@ -67,6 +64,7 @@ export default function Sidebar({ buttonname, ...props }) {
                     type="date"
                     name="dateto"
                     placeholder="dateto"
+                    onChange={formikSideBar.handleChange}
                     autoFocus
                   />
                 </Form.Group>
@@ -78,6 +76,7 @@ export default function Sidebar({ buttonname, ...props }) {
                     type="number"
                     name="nominalfrom"
                     placeholder="Nominal e.g., 20000"
+                    onChange={formikSideBar.handleChange}
                     autoFocus
                   />
                 </Form.Group>
@@ -89,6 +88,7 @@ export default function Sidebar({ buttonname, ...props }) {
                     type="number"
                     name="nominalto"
                     placeholder="Nominal e.g., 20000"
+                    onChange={formikSideBar.handleChange}
                     autoFocus
                   />
                 </Form.Group>
@@ -97,9 +97,23 @@ export default function Sidebar({ buttonname, ...props }) {
                   controlId="category"
                 >
                   <h6>Category</h6>
+                  <Form.Label className="m-0 p-0">
+                    <input
+                      type="checkbox"
+                      name="selectallcategory"
+                      value="selectallcategory"
+                      onChange={formikSideBar.handleChange}
+                      id="selectallcategory"
+                    />
+                    <span className="mx-2">Select All</span>
+                  </Form.Label>
                   {category.length &&
                     category.map((cat, idx) => (
-                      <CategoryFilterForm cat={cat} idx={idx} />
+                      <CategoryFilterForm
+                        cat={cat}
+                        idx={idx}
+                        formikSideBar={formikSideBar}
+                      />
                     ))}
                 </Form.Group>
               </Form>
