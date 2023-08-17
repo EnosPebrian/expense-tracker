@@ -15,17 +15,30 @@ import Sidebar from "../components/sidebar";
 import { CategoryIcon } from "../components/CategoryIcon";
 import { useFormik } from "formik";
 import "../components/style.css";
+import { ModalAddNewExpense } from "../components/ModalAddNewExpense";
 
 export const MainTables = () => {
   const [expenseList, setExpenseList] = useState([]);
   const [totalExpense, setTotalExpense] = useState({});
   const [show, setShow] = useState("");
+  const [showList, setShowList] = useState("");
   const [anyreq, setAnyreq] = useState("/expense");
-  const handleShowlist = () => {
-    setShow("show");
+  const handleShowList = () => {
+    setShowList("show");
   };
+  const handleCloseList = () => {
+    setShowList("");
+  };
+
   const handleClose = () => {
     setShow("");
+  };
+  const handleShowAddExpense = () => {
+    setShow("addexpense");
+  };
+
+  const handleShowEditExpense = () => {
+    setShow("editexpense");
   };
 
   const fetch = async (string) => {
@@ -62,9 +75,14 @@ export const MainTables = () => {
       }
       for (let key of valueskeys) {
         if (key === "category" && values.category.length === 0) continue;
-        if (values[key]) stringquery += `${key}=${values[key]}&`;
+        else if (key === "category" && values.category.length > 0) {
+          values[key].forEach((val) => {
+            stringquery += `${key}=${val}&`;
+          });
+        } else if (values[key]) stringquery += `${key}=${values[key]}&`;
       }
       setAnyreq(stringquery);
+      console.log(stringquery);
     },
   });
 
@@ -84,6 +102,17 @@ export const MainTables = () => {
 
   return (
     <>
+      <Button
+        style={{
+          position: "fixed",
+          top: "50px",
+          right: "0px",
+          zIndex: "5",
+        }}
+        onClick={handleShowAddExpense}
+      >
+        Add data
+      </Button>
       <Row>
         <Col
           lg={2}
@@ -145,13 +174,13 @@ export const MainTables = () => {
                   <Button
                     variant="primary"
                     className="mb-2"
-                    onClick={show === "show" ? handleClose : handleShowlist}
+                    onClick={show === "show" ? handleCloseList : handleShowList}
                   >
                     Show item list
                   </Button>
                   <Container
                     className={
-                      show === "show" ? "d-flex flex-column" : "d-none"
+                      showList === "show" ? "d-flex flex-column" : "d-none"
                     }
                   >
                     <Table striped bordered hover>
@@ -167,7 +196,14 @@ export const MainTables = () => {
                       <tbody>
                         {expenseList.length &&
                           expenseList.map((exp, index) => (
-                            <FetchList val={exp} index={index} />
+                            <FetchList
+                              val={exp}
+                              index={index}
+                              fetch={fetch}
+                              show={show}
+                              handleClose={handleClose}
+                              handleShowEditExpense={handleShowEditExpense}
+                            />
                           ))}
                       </tbody>
                     </Table>
@@ -179,6 +215,7 @@ export const MainTables = () => {
           </Container>
         </Col>
       </Row>
+      <ModalAddNewExpense handleClose={handleClose} show={show} fetch={fetch} />
     </>
   );
 };

@@ -8,11 +8,11 @@ export default function CategoryFilterForm({ cat, idx, formikSideBar }) {
         <input
           type="checkbox"
           name="category"
-          value={cat}
+          value={cat.category}
           onChange={formikSideBar.handleChange}
-          id={`${cat}-checkbox`}
+          id={`${cat.category}-checkbox`}
         />
-        <span className="mx-2">{cat}</span>
+        <span className="mx-2">{cat.category}</span>
       </Form.Label>
     </>
   );

@@ -1,4 +1,13 @@
-export const FetchList = ({ val, index }) => {
+import { ModalEditExpense } from "./ModalEditExpense";
+
+export const FetchList = ({
+  val,
+  index,
+  fetch,
+  handleClose,
+  handleShowEditExpense,
+  show,
+}) => {
   const color = {
     food: "bg-info",
     groceries: "bg-success",
@@ -7,12 +16,24 @@ export const FetchList = ({ val, index }) => {
     transportation: "bg-secondary text-light",
   };
   return (
-    <tr key={index}>
-      <td>{index + 1}</td>
-      <td>{val.name}</td>
-      <td className="text-end">IDR{val.nominal.toLocaleString(`id-ID`)}</td>
-      <td className={color[val.category]}>{val.category}</td>
-      <td>{val.date}</td>
-    </tr>
+    <>
+      <tr
+        key={index}
+        onClick={handleShowEditExpense}
+        style={{ cursor: "pointer" }}
+      >
+        <td>{index + 1}</td>
+        <td>{val.name}</td>
+        <td className="text-end">IDR{val.nominal.toLocaleString(`id-ID`)}</td>
+        <td className={color[val.category]}>{val.category}</td>
+        <td>{val.date}</td>
+      </tr>
+      <ModalEditExpense
+        handleClose={handleClose}
+        show={show}
+        fetch={fetch}
+        val={val}
+      />
+    </>
   );
 };

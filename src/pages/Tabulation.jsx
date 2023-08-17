@@ -1,8 +1,7 @@
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { MainTables } from "./maintables";
-import { Button, Container } from "react-bootstrap";
-import { ModalAddNewExpense } from "../components/ModalAddNewExpense";
+import { Container } from "react-bootstrap";
 
 export const Tabulation = () => {
   return (
@@ -16,16 +15,6 @@ export const Tabulation = () => {
         }}
       >
         <Container className="mw-100">
-          <Button
-            style={{
-              position: "fixed",
-              top: "50px",
-              right: "0px",
-              zIndex: "5",
-            }}
-          >
-            Add data
-          </Button>
           <Tabs
             defaultActiveKey="Summary"
             id="uncontrolled-tab"
@@ -45,7 +34,6 @@ export const Tabulation = () => {
           </Tabs>
         </Container>
       </Container>
-      <ModalAddNewExpense />
     </>
   );
 };

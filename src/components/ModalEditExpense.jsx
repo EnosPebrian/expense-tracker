@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { api } from "../api/api";
 import { Modal } from "react-bootstrap";
 
-export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
+export const ModalEditExpense = ({ handleClose, show, fetch, val }) => {
   const [categoryList, setCategoryList] = useState([]);
   const fetchCategory = async () => {
     await api
@@ -15,14 +15,15 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
       .catch((err) => console.log(err));
   };
 
-  const formikAdd = useFormik({
+  const formikEdit = useFormik({
     initialValues: {
-      name: "",
-      nominal: 0,
-      category: "",
-      date: "",
-      time: "",
+      name: val.name,
+      nominal: val.nominal,
+      category: val.category,
+      date: val.date,
+      time: val.time,
     },
+    enableReinitialize: true,
     validationSchema: Yup.object().shape({
       name: Yup.string().required(),
       nominal: Yup.number().required().min(1),
@@ -30,19 +31,19 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
       date: Yup.date(),
     }),
     onSubmit: async (values) => {
-      console.log(values);
-      await api.post(`/expense`, values);
-      fetch(`/expense`);
+      await api.post(`/expense?`);
     },
   });
+
+  //   console.log(formikEdit.values);
 
   useEffect(() => {
     fetchCategory();
   }, []);
   return (
     <>
-      <Modal show={show === "addexpense"} onHide={handleClose}>
-        <Modal.Header closeButton onClick={formikAdd.resetForm}>
+      <Modal show={show === "editexpense"} onHide={handleClose}>
+        <Modal.Header closeButton onClick={formikEdit.resetForm}>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -53,7 +54,8 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
                 type="text"
                 name="name"
                 placeholder="Any expense name"
-                onChange={formikAdd.handleChange}
+                onChange={formikEdit.handleChange}
+                value={formikEdit.values.name}
                 autoFocus
               />
             </Form.Group>
@@ -63,7 +65,8 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
                 type="number"
                 name="nominal"
                 placeholder="10000"
-                onChange={formikAdd.handleChange}
+                onChange={formikEdit.handleChange}
+                value={formikEdit.values.nominal}
                 autoFocus
               />
             </Form.Group>
@@ -72,8 +75,9 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
               <select
                 name="category"
                 id="category-addform"
-                onChange={formikAdd.handleChange}
-                onBlur={formikAdd.handleBlur}
+                onChange={formikEdit.handleChange}
+                onBlur={formikEdit.handleBlur}
+                value={formikEdit.values.category}
               >
                 <option></option>
                 {categoryList.length
@@ -90,7 +94,8 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
                 type="date"
                 name="date"
                 placeholder="YYYY-MM-DD"
-                onChange={formikAdd.handleChange}
+                onChange={formikEdit.handleChange}
+                value={formikEdit.values.date}
                 autoFocus
               />
             </Form.Group>
@@ -100,7 +105,8 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
                 type="time"
                 name="time"
                 placeholder="HH:mm:ss"
-                onChange={formikAdd.handleChange}
+                onChange={formikEdit.handleChange}
+                value={formikEdit.values.time}
                 autoFocus
               />
             </Form.Group>
@@ -110,13 +116,13 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
           <Button
             variant="secondary"
             onClick={() => {
-              formikAdd.resetForm();
+              formikEdit.resetForm();
               handleClose();
             }}
           >
             Close
           </Button>
-          <Button variant="primary" onClick={formikAdd.handleSubmit}>
+          <Button variant="primary" onClick={formikEdit.handleSubmit}>
             Save Changes
           </Button>
         </Modal.Footer>

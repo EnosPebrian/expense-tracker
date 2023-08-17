@@ -15,6 +15,8 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
 
+  function selectAll() {}
+
   useEffect(() => {
     fetchCategory();
   }, []);
@@ -113,8 +115,7 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                     <input
                       type="checkbox"
                       name="selectallcategory"
-                      value="selectallcategory"
-                      onChange={formikSideBar.handleChange}
+                      onClick={selectAll}
                       id="selectallcategory"
                     />
                     <span className="mx-2">Select All</span>
