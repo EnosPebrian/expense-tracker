@@ -1,10 +1,11 @@
 import { Card, CardImg, Col } from "react-bootstrap";
 import { Icon } from "../asset/Icon";
+import "../components/style.css";
 
-export const CategoryIcon = ({ val, totalExpense }) => {
+export const CategoryIcon = ({ val, totalExpense, idx }) => {
   return (
     <>
-      <Col lg={4} md={6} xs={12} className="my-3">
+      <Col lg={4} md={6} xs={12} className="my-3" key={idx}>
         <Card
           className="d-flex flex-row align-items-center"
           style={{ flexBasis: "300px" }}

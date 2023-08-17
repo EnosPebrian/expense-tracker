@@ -1,4 +1,5 @@
 import { Form } from "react-bootstrap";
+import "../components/style.css";
 
 export default function CategoryFilterForm({ cat, idx, formikSideBar }) {
   return (

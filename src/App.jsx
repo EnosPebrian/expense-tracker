@@ -1,10 +1,11 @@
 import "./App.css";
-import { MainTables } from "./pages/maintables";
+import { Tabulation } from "./pages/Tabulation";
+import "./components/style.css";
 
 function App() {
   return (
     <>
-      <MainTables />
+      <Tabulation />
     </>
   );
 }

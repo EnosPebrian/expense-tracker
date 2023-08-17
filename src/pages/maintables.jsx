@@ -14,11 +14,13 @@ import { Filter } from "../components/Filter";
 import Sidebar from "../components/sidebar";
 import { CategoryIcon } from "../components/CategoryIcon";
 import { useFormik } from "formik";
+import "../components/style.css";
 
 export const MainTables = () => {
   const [expenseList, setExpenseList] = useState([]);
   const [totalExpense, setTotalExpense] = useState({});
   const [show, setShow] = useState("");
+  const [anyreq, setAnyreq] = useState("/expense");
   const handleShowlist = () => {
     setShow("show");
   };
@@ -26,9 +28,9 @@ export const MainTables = () => {
     setShow("");
   };
 
-  const fetch = async () => {
+  const fetch = async (string) => {
     await api
-      .get(`/expense`)
+      .get(`${string}`)
       .then((res) => {
         setExpenseList(res.data.item);
         setTotalExpense(res.data.totalexpense);
@@ -48,24 +50,31 @@ export const MainTables = () => {
     },
     onSubmit: async (values) => {
       let stringquery = "/expense";
-      if (
-        values.name ||
-        values.category.length ||
-        values.datefrom ||
-        values.dateto ||
-        values.nominalfrom ||
-        values.nominalto
-      )
-        stringquery += "?";
-      if (values.name) stringquery += `name=${values.name}&`;
-      if (values.datefrom) stringquery += `datefrom=${values.datefrom}&`;
-      if (values.dateto) stringquery += `dateto=${values.dateto}&`;
+      const valueskeys = Object.keys(values);
+      for (let key of valueskeys) {
+        if (key === "category" && values.category.length === 0) {
+          continue;
+        }
+        if (values[key]) {
+          stringquery += "?";
+          break;
+        }
+      }
+      for (let key of valueskeys) {
+        if (key === "category" && values.category.length === 0) continue;
+        if (values[key]) stringquery += `${key}=${values[key]}&`;
+      }
+      setAnyreq(stringquery);
     },
   });
 
   useEffect(() => {
-    fetch();
+    fetch(anyreq);
   }, []);
+  useEffect(() => {
+    fetch(anyreq);
+  }, [anyreq]);
+
   useEffect(() => {
     const executeFilter = setTimeout(() => {
       formikSideBar.handleSubmit();
@@ -76,14 +85,18 @@ export const MainTables = () => {
   return (
     <>
       <Row>
-        <Col lg={2} className="border-right">
+        <Col
+          lg={2}
+          className="border-right p-0"
+          style={{ position: "sticky", left: "0" }}
+        >
           <Sidebar
             formikSideBar={formikSideBar}
             {...{ buttonname: "Filter", scroll: true, backdrop: true }}
           />
         </Col>
         <Col>
-          <Container className="vh-100">
+          <Container>
             <Card>
               <Card style={{ width: "100%" }}>
                 <Card.Body>
@@ -92,14 +105,18 @@ export const MainTables = () => {
                     style={{ margin: "0 auto" }}
                   >
                     <Card.Title>
-                      <h1>Expense Dashboard</h1>
+                      <h3>Expense Dashboard</h3>
                     </Card.Title>
                     <Row className="d-flex flex-row justify-content-center w-100 m-0">
-                      <Card className="d-flex flex-row align-items-center justify-content-center w-50">
+                      <Card className="d-flex flex-row align-items-center justify-content-center">
                         <CardImg
                           src="https://media.tenor.com/yQPfHp6AmGgAAAAC/money-with-wings-joypixels.gif"
                           alt="flying cash icon gif"
-                          style={{ maxWidth: "200px", float: "left" }}
+                          style={{
+                            height: "80%",
+                            maxWidth: "100px",
+                            float: "left",
+                          }}
                         />
                         <Card.Text className="h-100 d-flex flex-column justify-content-center align-item-center">
                           <h4>Total Expense:</h4>{" "}
@@ -113,12 +130,13 @@ export const MainTables = () => {
                     </Row>
                     <Row className="d-flex flex-row justify-content-start w-100 m-0">
                       {totalExpense?.grandtotal &&
-                        Object.keys(totalExpense).map((key) => {
+                        Object.keys(totalExpense).map((key, idx) => {
                           if (key !== "grandtotal")
                             return (
                               <CategoryIcon
                                 val={key}
                                 totalExpense={totalExpense}
+                                idx={idx}
                               />
                             );
                         })}

@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { api } from "../api/api";
 import CategoryFilterForm from "./Category-filter-form";
+import "../components/style.css";
 
 export default function Sidebar({ formikSideBar, buttonname, ...props }) {
   const [show, setShow] = useState(false);
@@ -20,7 +21,18 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
 
   return (
     <>
-      <Button variant="primary" onClick={toggleShow} className="d-lg-none">
+      <Button
+        variant="primary"
+        onClick={toggleShow}
+        className="d-lg-none"
+        style={{
+          position: "fixed",
+          top: "50px",
+          zIndex: "5",
+          float: "left",
+          left: "0",
+        }}
+      >
         {buttonname}
       </Button>
       <Offcanvas show={show} onHide={handleClose} {...props} responsive="lg">
@@ -29,12 +41,12 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Card>
-            <Card.Body>
+            <Card.Body className="p-0">
               <h5>Filter</h5>
               <Form>
-                <Form.Group className="mb-3" controlId="nameform">
-                  <Form.Label>
-                    <h6>Expense name</h6>
+                <Form.Group className="mb-1" controlId="nameform">
+                  <Form.Label className="m-0">
+                    <h6 className="m-0">Expense name</h6>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -44,9 +56,9 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                     autoFocus
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="datefrom">
-                  <Form.Label>
-                    <h6>Date from</h6>
+                <Form.Group className="mb-1" controlId="datefrom">
+                  <Form.Label className="m-0">
+                    <h6 className="m-0">Date from</h6>
                   </Form.Label>
                   <Form.Control
                     type="date"
@@ -56,9 +68,9 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                     autoFocus
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="dateto">
-                  <Form.Label>
-                    <h6>Date to</h6>
+                <Form.Group className="mb-1" controlId="dateto">
+                  <Form.Label className="m-0">
+                    <h6 className="m-0">Date to</h6>
                   </Form.Label>
                   <Form.Control
                     type="date"
@@ -68,9 +80,9 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                     autoFocus
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="nominalfrom">
-                  <Form.Label>
-                    <h6>Min Expense Nominal</h6>
+                <Form.Group className="mb-1" controlId="nominalfrom">
+                  <Form.Label className="m-0">
+                    <h6 className="m-0">Min Expense Nominal</h6>
                   </Form.Label>
                   <Form.Control
                     type="number"
@@ -80,9 +92,9 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                     autoFocus
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="nominalto">
-                  <Form.Label>
-                    <h6>Max Expense Nominal</h6>
+                <Form.Group className="mb-1" controlId="nominalto">
+                  <Form.Label className="m-0">
+                    <h6 className="m-0">Max Expense Nominal</h6>
                   </Form.Label>
                   <Form.Control
                     type="number"
@@ -93,10 +105,10 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                   />
                 </Form.Group>
                 <Form.Group
-                  className="mb-3 d-flex flex-column"
+                  className="mb-1 d-flex flex-column"
                   controlId="category"
                 >
-                  <h6>Category</h6>
+                  <h6 className="m-0">Category</h6>
                   <Form.Label className="m-0 p-0">
                     <input
                       type="checkbox"
