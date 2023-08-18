@@ -15,7 +15,8 @@ export const CategoryIcon = ({ val, totalExpense, idx }) => {
               src={Icon[val]}
               alt={`${val} gif`}
               style={{
-                maxWidth: "200px",
+                maxWidth: "100px",
+                width: "100%",
                 float: "left",
                 aspectRatio: "1/1",
                 objectFit: "fill",

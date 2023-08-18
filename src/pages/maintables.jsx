@@ -83,16 +83,13 @@ export const MainTables = () => {
         } else if (values[key]) stringquery += `${key}=${values[key]}&`;
       }
       setAnyreq(stringquery);
-      console.log(stringquery);
+      fetch(stringquery);
     },
   });
 
   useEffect(() => {
     fetch(anyreq);
   }, []);
-  useEffect(() => {
-    fetch(anyreq);
-  }, [anyreq]);
 
   useEffect(() => {
     const executeFilter = setTimeout(() => {
@@ -100,6 +97,8 @@ export const MainTables = () => {
     }, 500);
     return () => clearTimeout(executeFilter);
   }, [formikSideBar.values]);
+
+  console.log(totalExpense);
 
   return (
     <>
