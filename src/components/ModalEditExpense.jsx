@@ -31,11 +31,9 @@ export const ModalEditExpense = ({ handleClose, show, fetch, val }) => {
       date: Yup.date(),
     }),
     onSubmit: async (values) => {
-      await api.post(`/expense?`);
+      await api.post(`/expense`, values).catch((err) => console.log(err));
     },
   });
-
-  //   console.log(formikEdit.values);
 
   useEffect(() => {
     fetchCategory();

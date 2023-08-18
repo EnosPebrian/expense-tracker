@@ -16,6 +16,7 @@ import { CategoryIcon } from "../components/CategoryIcon";
 import { useFormik } from "formik";
 import "../components/style.css";
 import { ModalAddNewExpense } from "../components/ModalAddNewExpense";
+import { ModalEditExpense } from "../components/ModalEditExpense";
 
 export const MainTables = () => {
   const [expenseList, setExpenseList] = useState([]);
@@ -216,6 +217,7 @@ export const MainTables = () => {
         </Col>
       </Row>
       <ModalAddNewExpense handleClose={handleClose} show={show} fetch={fetch} />
+      {/* <ModalEditExpense handleClose={handleClose} show={show} fetch={fetch} /> */}
     </>
   );
 };
