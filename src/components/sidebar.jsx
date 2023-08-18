@@ -30,7 +30,7 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
         style={{
           position: "fixed",
           top: "50px",
-          zIndex: "5",
+          zIndex: "100",
           float: "left",
           left: "0",
         }}

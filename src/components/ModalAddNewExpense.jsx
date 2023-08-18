@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { api } from "../api/api";
 import { Modal } from "react-bootstrap";
 
-export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
+export const ModalAddNewExpense = ({ handleClose, show, fetch, anyreq }) => {
   const [categoryList, setCategoryList] = useState([]);
   const fetchCategory = async () => {
     await api
@@ -32,7 +32,8 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch }) => {
     onSubmit: async (values) => {
       console.log(values);
       await api.post(`/expense`, values);
-      fetch(`/expense`);
+      fetch(anyreq);
+      handleClose();
     },
   });
 

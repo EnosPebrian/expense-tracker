@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { api } from "../api/api";
 import { Modal } from "react-bootstrap";
 
-export const ModalEditExpense = ({ handleClose, show, fetch, val }) => {
+export const ModalEditExpense = ({ handleClose, show, fetch, val, anyreq }) => {
   const [categoryList, setCategoryList] = useState([]);
   const fetchCategory = async () => {
     await api
@@ -31,7 +31,11 @@ export const ModalEditExpense = ({ handleClose, show, fetch, val }) => {
       date: Yup.date(),
     }),
     onSubmit: async (values) => {
-      await api.post(`/expense`, values).catch((err) => console.log(err));
+      await api
+        .patch(`/expense/${val.id}`, values)
+        .catch((err) => console.log(err));
+      fetch(anyreq);
+      handleClose();
     },
   });
 
@@ -40,7 +44,7 @@ export const ModalEditExpense = ({ handleClose, show, fetch, val }) => {
   }, []);
   return (
     <>
-      <Modal show={show === "editexpense"} onHide={handleClose}>
+      <Modal show={show === `editexpense-${val.id}`} onHide={handleClose}>
         <Modal.Header closeButton onClick={formikEdit.resetForm}>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>

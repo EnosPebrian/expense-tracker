@@ -10,7 +10,6 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import { Filter } from "../components/Filter";
 import Sidebar from "../components/sidebar";
 import { CategoryIcon } from "../components/CategoryIcon";
 import { useFormik } from "formik";
@@ -23,7 +22,7 @@ export const MainTables = () => {
   const [totalExpense, setTotalExpense] = useState({});
   const [show, setShow] = useState("");
   const [showList, setShowList] = useState("");
-  const [anyreq, setAnyreq] = useState("/expense");
+  const [anyreq, setAnyreq] = useState("");
   const handleShowList = () => {
     setShowList("show");
   };
@@ -38,8 +37,8 @@ export const MainTables = () => {
     setShow("addexpense");
   };
 
-  const handleShowEditExpense = () => {
-    setShow("editexpense");
+  const handleShowEditExpense = (id) => {
+    setShow(`editexpense-${id}`);
   };
 
   const fetch = async (string) => {
@@ -107,7 +106,7 @@ export const MainTables = () => {
           position: "fixed",
           top: "50px",
           right: "0px",
-          zIndex: "5",
+          zIndex: "Infinity",
         }}
         onClick={handleShowAddExpense}
       >
@@ -142,14 +141,14 @@ export const MainTables = () => {
                           src="https://media.tenor.com/yQPfHp6AmGgAAAAC/money-with-wings-joypixels.gif"
                           alt="flying cash icon gif"
                           style={{
-                            height: "80%",
-                            maxWidth: "100px",
+                            height: "100%",
+                            maxWidth: "calc(50px + 1.5vw)",
                             float: "left",
                           }}
                         />
                         <Card.Text className="h-100 d-flex flex-column justify-content-center align-item-center">
-                          <h4>Total Expense:</h4>{" "}
-                          <h4>
+                          <h4 style={{ fontSize: "3vw" }}>Total Expense:</h4>
+                          <h4 style={{ fontSize: "3vw" }}>
                             IDR
                             {totalExpense.grandtotal &&
                               totalExpense?.grandtotal.toLocaleString(`id-ID`)}
@@ -174,7 +173,9 @@ export const MainTables = () => {
                   <Button
                     variant="primary"
                     className="mb-2"
-                    onClick={show === "show" ? handleCloseList : handleShowList}
+                    onClick={
+                      showList === "show" ? handleCloseList : handleShowList
+                    }
                   >
                     Show item list
                   </Button>
@@ -203,11 +204,11 @@ export const MainTables = () => {
                               show={show}
                               handleClose={handleClose}
                               handleShowEditExpense={handleShowEditExpense}
+                              anyreq={anyreq}
                             />
                           ))}
                       </tbody>
                     </Table>
-                    <Filter />
                   </Container>
                 </Card.Body>
               </Card>
@@ -215,8 +216,12 @@ export const MainTables = () => {
           </Container>
         </Col>
       </Row>
-      <ModalAddNewExpense handleClose={handleClose} show={show} fetch={fetch} />
-      {/* <ModalEditExpense handleClose={handleClose} show={show} fetch={fetch} /> */}
+      <ModalAddNewExpense
+        handleClose={handleClose}
+        show={show}
+        fetch={fetch}
+        anyreq={anyreq}
+      />
     </>
   );
 };

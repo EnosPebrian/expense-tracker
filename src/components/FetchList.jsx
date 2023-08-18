@@ -7,6 +7,7 @@ export const FetchList = ({
   handleClose,
   handleShowEditExpense,
   show,
+  anyreq,
 }) => {
   const color = {
     food: "bg-info",
@@ -19,7 +20,7 @@ export const FetchList = ({
     <>
       <tr
         key={index}
-        onClick={handleShowEditExpense}
+        onClick={() => handleShowEditExpense(val.id)}
         style={{ cursor: "pointer" }}
       >
         <td>{index + 1}</td>
@@ -33,6 +34,7 @@ export const FetchList = ({
         show={show}
         fetch={fetch}
         val={val}
+        anyreq={anyreq}
       />
     </>
   );
