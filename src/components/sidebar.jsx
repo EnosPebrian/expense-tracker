@@ -15,10 +15,19 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
 
-  function selectAll() {}
+  function toggle(e) {
+    const checkboxes = document.getElementsByName("category");
+    checkboxes.forEach((val) => {
+      if (val.checked !== e.target.checked) setTimeout(() => val.click(), 50);
+    });
+  }
 
   useEffect(() => {
     fetchCategory();
+    setTimeout(() => {
+      if (document.getElementById("selectallcategory").checked == false)
+        document.getElementById("selectallcategory").click();
+    }, 1000);
   }, []);
 
   return (
@@ -30,14 +39,20 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
         style={{
           position: "fixed",
           top: "50px",
-          zIndex: "100",
+          zIndex: "109999999999",
           float: "left",
           left: "0",
         }}
       >
         {buttonname}
       </Button>
-      <Offcanvas show={show} onHide={handleClose} {...props} responsive="lg">
+      <Offcanvas
+        show={show}
+        onHide={handleClose}
+        {...props}
+        responsive="lg"
+        style={{ zIndex: "10" }}
+      >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Detailed Search</Offcanvas.Title>
         </Offcanvas.Header>
@@ -115,10 +130,18 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                     <input
                       type="checkbox"
                       name="selectallcategory"
-                      onClick={selectAll}
                       id="selectallcategory"
+                      className="d-none"
+                      onClick={(e) => toggle(e)}
                     />
-                    <span className="mx-2">Select All</span>
+                    <Button
+                      className="m-0 p-0 bg-secondary border-secondary"
+                      onClick={() =>
+                        document.getElementById("selectallcategory").click()
+                      }
+                    >
+                      Select All
+                    </Button>
                   </Form.Label>
                   {category.length &&
                     category.map((cat, idx) => (

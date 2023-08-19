@@ -9,37 +9,39 @@ export const CategoryIcon = ({ val, totalExpense, idx }) => {
         <Col
           lg={4}
           md={6}
+          sm={6}
+          xs={12}
           xxs={12}
           className="my-3"
           key={idx}
           style={{ maxHeight: "100px" }}
         >
           <Card
-            className="d-flex flex-row align-items-center"
-            style={{ flexBasis: "300px", height: "100%" }}
+            className="d-flex flex-row align-items-center justify-content-center"
+            style={{ height: "100%" }}
           >
             <CardImg
               src={Icon[val]}
               alt={`${val} gif`}
               style={{
-                maxWidth: "7vw",
+                width: "calc(50px + 1vw)",
                 float: "left",
                 aspectRatio: "1/1",
                 objectFit: "fill",
               }}
             />
             <Card.Text className="h-100 d-flex flex-column justify-content-center align-item-center">
-              <h4
+              <span
                 style={{
                   textTransform: "capitalize",
-                  fontSize: "calc(12px + 1.5vw)",
+                  fontSize: "calc(14px + 1vw)",
                 }}
               >
                 {val}
-              </h4>
-              <h4 style={{ fontSize: "calc(12px + 1.5vw)" }}>
+              </span>
+              <span style={{ fontSize: "calc(14px + 1vw)" }}>
                 IDR{totalExpense[val].toLocaleString(`id-ID`)}
-              </h4>
+              </span>
             </Card.Text>
           </Card>
         </Col>
