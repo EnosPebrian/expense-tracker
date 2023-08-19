@@ -58,7 +58,7 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Card>
-            <Card.Body className="p-0">
+            <Card.Body>
               <h5>Filter</h5>
               <Form>
                 <Form.Group className="mb-1" controlId="nameform">
@@ -122,7 +122,7 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                   />
                 </Form.Group>
                 <Form.Group
-                  className="mb-1 d-flex flex-column"
+                  className="my-3 d-flex flex-column"
                   controlId="category"
                 >
                   <h6 className="m-0">Category</h6>
@@ -135,7 +135,7 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                       onClick={(e) => toggle(e)}
                     />
                     <Button
-                      className="m-0 p-0 bg-secondary border-secondary"
+                      className="m-0 px-1 py-0 bg-secondary border-secondary"
                       onClick={() =>
                         document.getElementById("selectallcategory").click()
                       }
@@ -153,6 +153,20 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                     ))}
                 </Form.Group>
               </Form>
+              <Button
+                className="m-0 px-1 py-0 bg-secondary border-secondary"
+                onClick={() => {
+                  console.log(document.getElementById("datefrom").value);
+                }}
+              >
+                YTD
+              </Button>
+              <Button
+                className="mx-2 px-1 py-0 bg-secondary border-secondary"
+                onClick={() => document.getElementById("datefrom").click()}
+              >
+                MTD
+              </Button>
             </Card.Body>
           </Card>
         </Offcanvas.Body>
