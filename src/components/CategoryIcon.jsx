@@ -34,7 +34,8 @@ export const CategoryIcon = ({ val, totalExpense, idx }) => {
               <span
                 style={{
                   textTransform: "capitalize",
-                  fontSize: "calc(14px + 1vw)",
+                  fontSize: "calc(14px )",
+                  // + 1vw)",
                 }}
               >
                 {val}

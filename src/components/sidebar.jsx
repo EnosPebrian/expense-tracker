@@ -27,6 +27,7 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
     setTimeout(() => {
       if (document.getElementById("selectallcategory").checked == false)
         document.getElementById("selectallcategory").click();
+      document.getElementById("button-MTD").click();
     }, 1000);
   }, []);
 
@@ -154,16 +155,28 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
                 </Form.Group>
               </Form>
               <Button
+                id="button-YTD"
                 className="m-0 px-1 py-0 bg-secondary border-secondary"
                 onClick={() => {
-                  console.log(document.getElementById("datefrom").value);
+                  document.getElementById("datefrom").value =
+                    new Date().toISOString().slice(0, 4) + "-01-01";
+                  formikSideBar.values.datefrom =
+                    new Date().toISOString().slice(0, 4) + "-01-01";
+                  formikSideBar.handleSubmit();
                 }}
               >
                 YTD
               </Button>
               <Button
+                id="button-MTD"
                 className="mx-2 px-1 py-0 bg-secondary border-secondary"
-                onClick={() => document.getElementById("datefrom").click()}
+                onClick={() => {
+                  document.getElementById("datefrom").value =
+                    new Date().toISOString().slice(0, 7) + "-01";
+                  formikSideBar.values.datefrom =
+                    new Date().toISOString().slice(0, 7) + "-01";
+                  formikSideBar.handleSubmit();
+                }}
               >
                 MTD
               </Button>
