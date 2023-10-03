@@ -15,8 +15,10 @@ import { CategoryIcon } from "../components/CategoryIcon";
 import { useFormik } from "formik";
 import "../components/style.css";
 import { ModalAddNewExpense } from "../components/ModalAddNewExpense";
+import { useSearchParams } from "react-router-dom";
 
 export const MainTables = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [expenseList, setExpenseList] = useState([]);
   const [totalExpense, setTotalExpense] = useState({});
   const [show, setShow] = useState("");

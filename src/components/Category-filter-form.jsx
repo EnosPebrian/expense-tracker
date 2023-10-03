@@ -11,6 +11,11 @@ export default function CategoryFilterForm({ cat, idx, formikSideBar }) {
           value={cat.category}
           onChange={formikSideBar.handleChange}
           id={`${cat.category}-checkbox`}
+          checked={
+            formikSideBar.values.category.findIndex(
+              (val) => val === cat.category
+            ) !== -1
+          }
         />
         <span className="mx-2">{cat.category}</span>
       </Form.Label>

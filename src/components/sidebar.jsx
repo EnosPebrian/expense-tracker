@@ -18,17 +18,12 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
   function toggle(e) {
     const checkboxes = document.getElementsByName("category");
     checkboxes.forEach((val) => {
-      if (val.checked !== e.target.checked) setTimeout(() => val.click(), 50);
+      if (val.checked !== e?.target?.checked) setTimeout(() => val.click(), 50);
     });
   }
 
   useEffect(() => {
     fetchCategory();
-    setTimeout(() => {
-      if (document.getElementById("selectallcategory").checked == false)
-        document.getElementById("selectallcategory").click();
-      document.getElementById("button-MTD").click();
-    }, 1000);
   }, []);
 
   return (
@@ -40,20 +35,14 @@ export default function Sidebar({ formikSideBar, buttonname, ...props }) {
         style={{
           position: "fixed",
           top: "50px",
-          zIndex: "109999999999",
+          zIndex: "10",
           float: "left",
           left: "0",
         }}
       >
         {buttonname}
       </Button>
-      <Offcanvas
-        show={show}
-        onHide={handleClose}
-        {...props}
-        responsive="lg"
-        style={{ zIndex: "10" }}
-      >
+      <Offcanvas show={show} onHide={handleClose} {...props} responsive="lg">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Detailed Search</Offcanvas.Title>
         </Offcanvas.Header>
