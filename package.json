@@ -1,7 +1,6 @@
 {
   "name": "expense-tracker",
   "version": "0.1.0",
-  "homepage": "https://enospebrian.github.io/expense-tracker",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",
