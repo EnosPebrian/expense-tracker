@@ -86,7 +86,7 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch, anyreq }) => {
               </select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="date-addform">
-              <Form.Label>Nominal</Form.Label>
+              <Form.Label>Date</Form.Label>
               <Form.Control
                 type="date"
                 name="date"
@@ -96,7 +96,7 @@ export const ModalAddNewExpense = ({ handleClose, show, fetch, anyreq }) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="time-addform">
-              <Form.Label>Nominal</Form.Label>
+              <Form.Label>Time</Form.Label>
               <Form.Control
                 type="time"
                 name="time"

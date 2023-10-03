@@ -91,7 +91,7 @@ export const ModalEditExpense = ({ handleClose, show, fetch, val, anyreq }) => {
               </select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="date-addform">
-              <Form.Label>Nominal</Form.Label>
+              <Form.Label>Date</Form.Label>
               <Form.Control
                 type="date"
                 name="date"
@@ -102,7 +102,7 @@ export const ModalEditExpense = ({ handleClose, show, fetch, val, anyreq }) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="time-addform">
-              <Form.Label>Nominal</Form.Label>
+              <Form.Label>Time</Form.Label>
               <Form.Control
                 type="time"
                 name="time"
