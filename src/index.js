@@ -15,7 +15,7 @@ const store = configureStore({ reducer: reducers, middleware: [thunk] });
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="https://enospebrian.github.io/expense-tracker/">
         <App />
       </BrowserRouter>
     </Provider>
