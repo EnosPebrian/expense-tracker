@@ -5,4 +5,7 @@ export const Icon = {
   groceries: "https://media3.giphy.com/media/Ply1nOFdlZZsLTz6mr/giphy.gif",
   sport:
     "https://www.sbc-international.de/wp-content/themes/athena/inc/images/RunningMan.gif",
+  "self development": "https://static.thenounproject.com/png/3117272-200.png",
+  "household consumables":
+    "https://static.thenounproject.com/png/2072499-200.png",
 };
